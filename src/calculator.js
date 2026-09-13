@@ -34,6 +34,35 @@ function divide(left, right) {
   return left / right;
 }
 
+/**
+ * Return the remainder of the left number divided by the right number.
+ */
+function modulo(left, right) {
+  if (right === 0) {
+    throw new Error('Cannot calculate modulo by zero.');
+  }
+
+  return left % right;
+}
+
+/**
+ * Raise the base to the given exponent.
+ */
+function power(base, exponent) {
+  return base ** exponent;
+}
+
+/**
+ * Return the square root of a non-negative number.
+ */
+function squareRoot(number) {
+  if (number < 0) {
+    throw new Error('Cannot calculate the square root of a negative number.');
+  }
+
+  return Math.sqrt(number);
+}
+
 function calculate(left, operator, right) {
   switch (operator) {
     case '+':
@@ -44,8 +73,14 @@ function calculate(left, operator, right) {
       return multiply(left, right);
     case '/':
       return divide(left, right);
+    case '%':
+      return modulo(left, right);
+    case '^':
+      return power(left, right);
     default:
-      throw new Error(`Unsupported operator "${operator}". Use +, -, *, or /.`);
+      throw new Error(
+        `Unsupported operator "${operator}". Use +, -, *, /, %, or ^.`
+      );
   }
 }
 
@@ -84,6 +119,9 @@ module.exports = {
   subtract,
   multiply,
   divide,
+  modulo,
+  power,
+  squareRoot,
   addition: add,
   subtraction: subtract,
   multiplication: multiply,
