@@ -3,6 +3,9 @@ const {
   subtract,
   multiply,
   divide,
+  modulo,
+  power,
+  squareRoot,
   addition,
   subtraction,
   multiplication,
@@ -16,6 +19,9 @@ describe('named operation exports', () => {
     expect(typeof subtraction).toBe('function');
     expect(typeof multiplication).toBe('function');
     expect(typeof division).toBe('function');
+    expect(typeof modulo).toBe('function');
+    expect(typeof power).toBe('function');
+    expect(typeof squareRoot).toBe('function');
   });
 });
 
@@ -75,19 +81,74 @@ describe('divide', () => {
   });
 });
 
+describe('modulo', () => {
+  test('matches the image example 5 % 2 = 1', () => {
+    expect(modulo(5, 2)).toBe(1);
+  });
+
+  test('handles negative operands', () => {
+    expect(modulo(-10, 3)).toBe(-1);
+  });
+
+  test('returns the dividend when it is smaller than the divisor', () => {
+    expect(modulo(2, 5)).toBe(2);
+  });
+
+  test('throws when the divisor is zero', () => {
+    expect(() => modulo(10, 0)).toThrow('Cannot calculate modulo by zero.');
+  });
+});
+
+describe('power', () => {
+  test('matches the image example 2 ^ 3 = 8', () => {
+    expect(power(2, 3)).toBe(8);
+  });
+
+  test('handles zero and negative exponents', () => {
+    expect(power(5, 0)).toBe(1);
+    expect(power(2, -2)).toBe(0.25);
+  });
+
+  test('handles a negative base with an integer exponent', () => {
+    expect(power(-2, 3)).toBe(-8);
+  });
+});
+
+describe('squareRoot', () => {
+  test('matches the image example sqrt(16) = 4', () => {
+    expect(squareRoot(16)).toBe(4);
+  });
+
+  test('returns zero for zero', () => {
+    expect(squareRoot(0)).toBe(0);
+  });
+
+  test('handles a non-perfect square', () => {
+    expect(squareRoot(2)).toBeCloseTo(Math.sqrt(2));
+  });
+
+  test('throws for negative numbers', () => {
+    expect(() => squareRoot(-1)).toThrow(
+      'Cannot calculate the square root of a negative number.'
+    );
+  });
+});
+
 describe('calculate', () => {
   test.each([
     [2, '+', 3, 5],
     [10, '-', 4, 6],
     [45, '*', 2, 90],
     [20, '/', 5, 4],
+    [10, '%', 3, 1],
+    [2, '^', 3, 8],
   ])('calculates %s %s %s as %s', (left, operator, right, expected) => {
     expect(calculate(left, operator, right)).toBe(expected);
   });
 
   test('rejects unsupported operators', () => {
-    expect(() => calculate(2, '^', 3)).toThrow(
-      'Unsupported operator "^". Use +, -, *, or /.'
+    expect(() => calculate(2, '&', 3)).toThrow(
+      'Unsupported operator "&". Use +, -, *, /, %, or ^.'
     );
   });
 });
