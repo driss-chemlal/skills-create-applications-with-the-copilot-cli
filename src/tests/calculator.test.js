@@ -3,8 +3,21 @@ const {
   subtract,
   multiply,
   divide,
+  addition,
+  subtraction,
+  multiplication,
+  division,
   calculate,
 } = require('../calculator');
+
+describe('named operation exports', () => {
+  test('exports addition, subtraction, multiplication, and division', () => {
+    expect(typeof addition).toBe('function');
+    expect(typeof subtraction).toBe('function');
+    expect(typeof multiplication).toBe('function');
+    expect(typeof division).toBe('function');
+  });
+});
 
 describe('add', () => {
   test('adds the example operands 2 and 3', () => {
